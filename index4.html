@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أخبار اليوم | Today's News</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap');
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body[dir="ltr"] {
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .news-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .breaking-news {
+            animation: slideIn 1s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .gradient-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <!-- Top Bar -->
+            <div class="flex items-center justify-between py-3 border-b border-gray-200">
+                <div class="flex items-center gap-4">
+                    <div class="text-sm text-gray-600" id="date"></div>
+                    <div class="flex gap-3">
+                        <a href="#" class="text-gray-600 hover:text-blue-600 transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-blue-600 transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-red-600 transition"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-blue-600 transition"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <button onclick="toggleLanguage()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition text-sm font-medium">
+                    <i class="fas fa-globe me-2"></i>
+                    <span id="langBtn">English</span>
+                </button>
+            </div>
+            
+            <!-- Main Navigation -->
+            <nav class="py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-gradient-to-br from-blue-600 to-purple-600 text-white p-3 rounded-lg">
+                            <i class="fas fa-newspaper text-2xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-800" id="siteName">أخبار اليوم</h1>
+                            <p class="text-xs text-gray-500" id="siteSlogan">نافذتك على العالم</p>
+                        </div>
+                    </div>
+                    
+                    <button class="lg:hidden text-gray-600" onclick="toggleMenu()">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                    
+                    <ul class="hidden lg:flex items-center gap-8 font-medium" id="navMenu">
+                        <li><a href="#" class="text-blue-600 hover:text-blue-700 transition">الرئيسية</a></li>
+                        <li><a href="#" class="text-gray-700 hover:text-blue-600 transition">سياسة</a></li>
+                        <li><a href="#" class="text-gray-700 hover:text-blue-600 transition">اقتصاد</a></li>
+                        <li><a href="#" class="text-gray-700 hover:text-blue-600 transition">رياضة</a></li>
+                        <li><a href="#" class="text-gray-700 hover:text-blue-600 transition">تكنولوجيا</a></li>
+                        <li><a href="#" class="text-gray-700 hover:text-blue-600 transition">ثقافة</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breaking News -->
+    <div class="bg-red-600 text-white py-3 breaking-news">
+        <div class="container mx-auto px-4 flex items-center gap-4">
+            <span class="bg-white text-red-600 px-4 py-1 rounded-full font-bold text-sm" id="breakingLabel">عاجل</span>
+            <p class="text-sm md:text-base flex-1" id="breakingText">اجتماع طارئ لمجلس الأمن الدولي لمناقشة التطورات الأخيرة في المنطقة</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Featured News -->
+        <section class="mb-12">
+            <div class="grid lg:grid-cols-2 gap-6">
+                <!-- Main Featured -->
+                <div class="relative rounded-2xl overflow-hidden shadow-xl group cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" alt="News" class="w-full h-96 object-cover group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 gradient-overlay"></div>
+                    <div class="absolute bottom-0 p-6 text-white">
+                        <span class="bg-blue-600 px-3 py-1 rounded-full text-xs font-medium mb-3 inline-block">سياسة</span>
+                        <h2 class="text-2xl md:text-3xl font-bold mb-2" id="featuredTitle1">قمة دولية تناقش التحديات الاقتصادية العالمية</h2>
+                        <p class="text-gray-200 text-sm mb-3" id="featuredDesc1">قادة العالم يجتمعون لمناقشة الحلول المستدامة للأزمات الاقتصادية المتزايدة</p>
+                        <div class="flex items-center gap-4 text-sm">
+                            <span><i class="far fa-clock me-1"></i> قبل ساعتين</span>
+                            <span><i class="far fa-eye me-1"></i> 15.2K</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Secondary Featured -->
+                <div class="grid gap-6">
+                    <div class="relative rounded-2xl overflow-hidden shadow-lg group cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600" alt="Tech" class="w-full h-44 object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute inset-0 gradient-overlay"></div>
+                        <div class="absolute bottom-0 p-4 text-white">
+                            <span class="bg-purple-600 px-3 py-1 rounded-full text-xs font-medium mb-2 inline-block">تكنولوجيا</span>
+                            <h3 class="text-lg font-bold" id="featuredTitle2">ثورة الذكاء الاصطناعي تغير عالم الأعمال</h3>
+                            <span class="text-xs text-gray-300"><i class="far fa-clock me-1"></i> قبل 3 ساعات</span>
+                        </div>
+                    </div>
+                    
+                    <div class="relative rounded-2xl overflow-hidden shadow-lg group cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600" alt="Sports" class="w-full h-44 object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute inset-0 gradient-overlay"></div>
+                        <div class="absolute bottom-0 p-4 text-white">
+                            <span class="bg-green-600 px-3 py-1 rounded-full text-xs font-medium mb-2 inline-block">رياضة</span>
+                            <h3 class="text-lg font-bold" id="featuredTitle3">تأهل مثير لنهائي البطولة الكبرى</h3>
+                            <span class="text-xs text-gray-300"><i class="far fa-clock me-1"></i> قبل 5 ساعات</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest News Grid -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                <span class="w-1 h-8 bg-blue-600 rounded-full"></span>
+                <span id="latestTitle">أحدث الأخبار</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- News Card 1 -->
+                <article class="bg-white rounded-xl overflow-hidden shadow-md news-card">
+                    <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=500" alt="Business" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <span class="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-xs font-medium">اقتصاد</span>
+                        <h3 class="text-xl font-bold text-gray-800 mt-3 mb-2 hover:text-blue-600 transition cursor-pointer" id="news1Title">ارتفاع أسعار النفط في الأسواق العالمية</h3>
+                        <p class="text-gray-600 text-sm mb-4" id="news1Desc">تشهد أسواق النفط ارتفاعاً ملحوظاً وسط توقعات بزيادة الطلب العالمي</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="far fa-clock me-1"></i> قبل 4 ساعات</span>
+                            <span><i class="far fa-comment me-1"></i> 45</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- News Card 2 -->
+                <article class="bg-white rounded-xl overflow-hidden shadow-md news-card">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500" alt="Health" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <span class="bg-teal-100 text-teal-600 px-3 py-1 rounded-full text-xs font-medium">صحة</span>
+                        <h3 class="text-xl font-bold text-gray-800 mt-3 mb-2 hover:text-blue-600 transition cursor-pointer" id="news2Title">اكتشاف علاج جديد يبشر بالأمل</h3>
+                        <p class="text-gray-600 text-sm mb-4" id="news2Desc">باحثون يعلنون عن تطوير علاج واعد يظهر نتائج إيجابية</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="far fa-clock me-1"></i> قبل 6 ساعات</span>
+                            <span><i class="far fa-comment me-1"></i> 78</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- News Card 3 -->
+                <article class="bg-white rounded-xl overflow-hidden shadow-md news-card">
+                    <img src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=500" alt="Education" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <span class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full text-xs font-medium">تعليم</span>
+                        <h3 class="text-xl font-bold text-gray-800 mt-3 mb-2 hover:text-blue-600 transition cursor-pointer" id="news3Title">مبادرة تعليمية رقمية طموحة</h3>
+                        <p class="text-gray-600 text-sm mb-4" id="news3Desc">إطلاق برنامج تعليمي مبتكر يهدف لتطوير المهارات الرقمية</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="far fa-clock me-1"></i> قبل 8 ساعات</span>
+                            <span><i class="far fa-comment me-1"></i> 92</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- News Card 4 -->
+                <article class="bg-white rounded-xl overflow-hidden shadow-md news-card">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=500" alt="Environment" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-medium">بيئة</span>
+                        <h3 class="text-xl font-bold text-gray-800 mt-3 mb-2 hover:text-blue-600 transition cursor-pointer" id="news4Title">خطة طموحة لمكافحة التغير المناخي</h3>
+                        <p class="text-gray-600 text-sm mb-4" id="news4Desc">دول عديدة تتعهد بخفض الانبعاثات الكربونية بشكل كبير</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="far fa-clock me-1"></i> قبل 10 ساعات</span>
+                            <span><i class="far fa-comment me-1"></i> 156</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- News Card 5 -->
+                <article class="bg-white rounded-xl overflow-hidden shadow-md news-card">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500" alt="Business" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <span class="bg-yellow-100 text-yellow-600 px-3 py-1 rounded-full text-xs font-medium">أعمال</span>
+                        <h3 class="text-xl font-bold text-gray-800 mt-3 mb-2 hover:text-blue-600 transition cursor-pointer" id="news5Title">شراكة استراتيجية بين عمالقة التقنية</h3>
+                        <p class="text-gray-600 text-sm mb-4" id="news5Desc">اتفاقية تعاون جديدة تعد بتغيير صناعة التكنولوجيا</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="far fa-clock me-1"></i> قبل 12 ساعة</span>
+                            <span><i class="far fa-comment me-1"></i> 203</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- News Card 6 -->
+                <article class="bg-white rounded-xl overflow-hidden shadow-md news-card">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500" alt="Culture" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <span class="bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-xs font-medium">ثقافة</span>
+                        <h3 class="text-xl font-bold text-gray-800 mt-3 mb-2 hover:text-blue-600 transition cursor-pointer" id="news6Title">مهرجان ثقافي دولي يبدأ فعالياته</h3>
+                        <p class="text-gray-600 text-sm mb-4" id="news6Desc">عروض فنية متنوعة تجمع مبدعين من مختلف أنحاء العالم</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="far fa-clock me-1"></i> قبل 14 ساعة</span>
+                            <span><i class="far fa-comment me-1"></i> 87</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-gradient-to-br from-blue-600 to-purple-600 p-3 rounded-lg">
+                            <i class="fas fa-newspaper text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold" id="footerTitle">أخبار اليوم</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm" id="footerDesc">منصتك الموثوقة للأخبار العالمية والمحلية على مدار الساعة</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4" id="footerLinks1">روابط سريعة</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">من نحن</a></li>
+                        <li><a href="#" class="hover:text-white transition">اتصل بنا</a></li>
+                        <li><a href="#" class="hover:text-white transition">سياسة الخصوصية</a></li>
+                        <li><a href="#" class="hover:text-white transition">شروط الاستخدام</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4" id="footerLinks2">الأقسام</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">سياسة</a></li>
+                        <li><a href="#" class="hover:text-white transition">اقتصاد</a></li>
+                        <li><a href="#" class="hover:text-white transition">رياضة</a></li>
+                        <li><a href="#" class="hover:text-white transition">تكنولوجيا</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4" id="footerNewsletter">النشرة البريدية</h4>
+                    <p class="text-gray-400 text-sm mb-3" id="footerNewsletterDesc">اشترك ليصلك كل جديد</p>
+                    <div class="flex gap-2">
+                        <input type="email" placeholder="بريدك الإلكتروني" class="flex-1 px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-blue-600">
+                        <button class="bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-400 text-sm" id="copyright">© 2025 أخبار اليوم. جميع الحقوق محفوظة</p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Display current date
+        function updateDate() {
+            const date = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const isArabic = document.documentElement.getAttribute('lang') === 'ar';
+            const locale = isArabic ? 'ar-SA' : 'en-US';
+            document.getElementById('date').textContent = date.toLocaleDateString(locale, options);
+        }
+        updateDate();
+
+        // Toggle mobile menu
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Language translations
+        const translations = {
+            ar: {
+                siteName: 'أخبار اليوم',
+                siteSlogan: 'نافذتك على العالم',
+                langBtn: 'English',
+                breakingLabel: 'عاجل',
+                breakingText: 'اجتماع طارئ لمجلس الأمن الدولي لمناقشة التطورات الأخيرة في المنطقة',
+                featuredTitle1: 'قمة دولية تناقش التحديات الاقتصادية العالمية',
+                featuredDesc1: 'قادة العالم يجتمعون لمناقشة الحلول المستدامة للأزمات الاقتصادية المتزايدة',
+                featuredTitle2: 'ثورة الذكاء الاصطناعي تغير عالم الأعمال',
+                featuredTitle3: 'تأهل مثير لنهائي البطولة الكبرى',
+                latestTitle: 'أحدث الأخبار',
+                news1Title: 'ارتفاع أسعار النفط في الأسواق العالمية',
+                news1Desc: 'تشهد أسواق النفط ارتفاعاً ملحوظاً وسط توقعات بزيادة الطلب العالمي',
+                news2Title: 'اكتشاف علاج جديد يبشر بالأمل',
+                news2Desc: 'باحثون يعلنون عن تطوير علاج واعد يظهر نتائج إيجابية',
+                news3Title: 'مبادرة تعليمية رقمية طموحة',
+                news3Desc: 'إطلاق برنامج تعليمي مبتكر يهدف لتطوير المهارات الرقمية',
+                news4Title: 'خطة طموحة لمكافحة التغير المناخي',
+                news4Desc: 'دول عديدة تتعهد بخفض الانبعاثات الكربونية بشكل كبير',
+                news5Title: 'شراكة استراتيجية بين عمالقة التقنية',
+                news5Desc: 'اتفاقية تعاون جديدة تعد بتغيير صناعة التكنولوجيا',
+                news6Title: 'مهرجان ثقافي دولي يبدأ فعالياته',
+                news6Desc: 'عروض فنية متنوعة تجمع مبدعين من مختلف أنحاء العالم',
+                footerTitle: 'أخبار اليوم',
+                footerDesc: 'منصتك الموثوقة للأخبار العالمية والمحلية على مدار الساعة',
+                footerLinks1: 'روابط سريعة',
+                footerLinks2: 'الأقسام',
+                footerNewsletter: 'النشرة البريدية',
+                footerNewsletterDesc: 'اشترك ليصلك كل جديد',
+                copyright: '© 2025 أخبار اليوم. جميع الحقوق محفوظة'
+            },
+            en: {
+                siteName: "Today's News",
+                siteSlogan: 'Your Window to the World',
+                langBtn: 'العربية',
+                breakingLabel: 'Breaking',
+                breakingText: 'Emergency UN Security Council meeting to discuss latest regional developments',
+                featuredTitle1: 'Global Summit Addresses Economic Challenges',
+                featuredDesc1: 'World leaders gather to discuss sustainable solutions to growing economic crises',
+                featuredTitle2: 'AI Revolution Transforming Business World',
+                featuredTitle3: 'Thrilling Qualification to Major Championship Final',
+                latestTitle: 'Latest News',
+                news1Title: 'Oil Prices Rise in Global Markets',
+                news1Desc: 'Oil markets witness significant increase amid expectations of growing global demand',
+                news2Title: 'New Treatment Discovery Brings Hope',
+                news2Desc: 'Researchers announce development of promising treatment showing positive results',
+                news3Title: 'Ambitious Digital Education Initiative',
+                news3Desc: 'Launch of innovative educational program aimed at developing digital skills',
+                news4Title: 'Ambitious Plan to Combat Climate Change',
+                news4Desc: 'Many countries pledge to significantly reduce carbon emissions',
+                news5Title: 'Strategic Partnership Between Tech Giants',
+                news5Desc: 'New cooperation agreement promises to change the technology industry',
+                news6Title: 'International Cultural Festival Begins',
+                news6Desc: 'Diverse artistic performances bringing together creators from around the world',
+                footerTitle: "Today's News",
+                footerDesc: 'Your trusted platform for global and local news around the clock',
+                footerLinks1: 'Quick Links',
+                footerLinks2: 'Sections',
+                footerNewsletter: 'Newsletter',
+                footerNewsletterDesc: 'Subscribe for latest updates',
+                copyright: "© 2025 Today's News. All rights reserved"
+            }
+        };
+
+        // Toggle language
+        function toggleLanguage() {
+            const html = document.documentElement;
+            const currentLang = html.getAttribute('lang');
+            const newLang = currentLang === 'ar' ? 'en' : 'ar';
+            const newDir = newLang === 'ar' ? 'rtl' : 'ltr';
+            
+            html.setAttribute('lang', newLang);
+            html.setAttribute('dir', newDir);
+            
+            // Update all text content
+            const lang = translations[newLang];
+            Object.keys(lang).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = lang[key];
+                }
+            });
+            
+            updateDate();
+            
+            // Update navigation menu
+            const navMenu = document.getElementById('navMenu');
+            if (newLang === 'ar') {
+                navMenu.innerHTML = `
+                    <li><a href="#" class="text-blue-600 hover:text-blue-700 transition">الرئيسية</a></li>
+                    <li><a href="#" class="text-gray-700 hover:text-blue-600 transition">سياسة</a></li>
+                    <li><a href="#" class="text-gray-700 hover:text-blue-600 transition">اقتصاد</a></li>
+                    <li><a href="#" class="text-gray-700 hover:text-blue-600 transition">رياضة</a></li>
+                    <li><a href="#" class="text-gray-700 hover:text-blue-600 transition">تكنولوجيا</a></li>
+                    <li><a href="#" class="text-gray-700 hover:text-blue-600 transition">ثقافة</a></li>
+                `;
+            } else {
+                navMenu.innerHTML = `
+                    <li><a href="#" class="text-blue-600 hover:text-blue-700 transition">Home</a></li>
+                    <li><a href="#" class="text-gray-700 hover:text-blue-600 transition">Politics</a></li>
+                    <li><a href="#" class="text-gray-700 hover:text-blue-600 transition">Economy</a></li>
+                    <li><a href="#" class="text-gray-700 hover:text-blue-600 transition">Sports</a></li>
+                    <li><a href="#" class="text-gray-700 hover:text-blue-600 transition">Technology</a></li>
+                    <li><a href="#" class="text-gray-700 hover:text-blue-600 transition">Culture</a></li>
+                `;
+            }
+        }
+
+        // Smooth scroll to top button
+        window.addEventListener('scroll', function() {
+            const scrollBtn = document.getElementById('scrollTop');
+            if (scrollBtn) {
+                if (window.pageYOffset > 300) {
+                    scrollBtn.classList.remove('hidden');
+                } else {
+                    scrollBtn.classList.add('hidden');
+                }
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+
+    <!-- Scroll to top button -->
+    <button onclick="scrollToTop()" id="scrollTop" class="hidden fixed bottom-8 right-8 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition transform hover:scale-110 z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+</body>
+</html>

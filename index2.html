@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أخبار اليوم - موقع إخباري متكامل</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#1E40AF',
+                        accent: '#F59E0B',
+                    },
+                    fontFamily: {
+                        'tajawal': ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+        
+        .ad-banner {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-tajawal">
+    <!-- شريط التنقل -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <!-- الشعار -->
+                <div class="flex items-center">
+                    <i class="fas fa-newspaper text-primary text-2xl ml-2"></i>
+                    <h1 class="text-xl font-bold text-secondary">أخبار اليوم</h1>
+                </div>
+                
+                <!-- قائمة التنقل -->
+                <nav class="hidden md:flex space-x-6 space-x-reverse">
+                    <a href="#" class="text-gray-700 hover:text-primary transition duration-300">الرئيسية</a>
+                    <a href="#" class="text-gray-700 hover:text-primary transition duration-300">أخبار عاجلة</a>
+                    <a href="#" class="text-gray-700 hover:text-primary transition duration-300">رياضة</a>
+                    <a href="#" class="text-gray-700 hover:text-primary transition duration-300">اقتصاد</a>
+                    <a href="#" class="text-gray-700 hover:text-primary transition duration-300">تكنولوجيا</a>
+                </nav>
+                
+                <!-- زر القائمة المختصرة للهواتف -->
+                <button class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- العمود الأيسر - الأخبار الرئيسية -->
+            <div class="lg:col-span-2">
+                <!-- شريط الأخبار العاجلة -->
+                <div class="bg-red-100 border-r-4 border-red-500 p-4 mb-6 rounded flex items-center fade-in">
+                    <span class="bg-red-500 text-white px-3 py-1 rounded ml-3">عاجل</span>
+                    <p class="text-red-700 font-medium">اجتماع طارئ لمجلس الوزراء لمناقشة مستجدات الأوضاع الاقتصادية</p>
+                </div>
+                
+                <!-- القسم الرئيسي -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-bold text-secondary border-r-4 border-primary pr-3 mb-6">الأخبار الرئيسية</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- الخبر الرئيسي -->
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden news-card">
+                            <div class="relative">
+                                <img src="https://picsum.photos/600/400?random=1" alt="خبر رئيسي" class="w-full h-48 object-cover">
+                                <span class="absolute top-0 right-0 bg-primary text-white px-3 py-1 m-2 rounded">اقتصاد</span>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-lg font-bold mb-2">انتعاش اقتصادي غير مسبوق يشهده السوق المحلي خلال الربع الأول</h3>
+                                <p class="text-gray-600 mb-4">شهد الاقتصاد المحلي نمواً ملحوظاً خلال الأشهر الثلاثة الماضية، مع توقعات بمزيد من التحسن خلال الفترة المقبلة.</p>
+                                <div class="flex justify-between items-center text-sm text-gray-500">
+                                    <span><i class="far fa-clock ml-1"></i> منذ 3 ساعات</span>
+                                    <span><i class="far fa-eye ml-1"></i> 2,450 مشاهدة</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- الخبر الثاني -->
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden news-card">
+                            <div class="relative">
+                                <img src="https://picsum.photos/600/400?random=2" alt="خبر رئيسي" class="w-full h-48 object-cover">
+                                <span class="absolute top-0 right-0 bg-accent text-white px-3 py-1 m-2 rounded">رياضة</span>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="text-lg font-bold mb-2">فوز تاريخي للفريق الوطني في البطولة الآسيوية</h3>
+                                <p class="text-gray-600 mb-4">حقق الفريق الوطني فوزاً مثيراً على منافسه الآسيوي في المباراة النهائية للبطولة القارية.</p>
+                                <div class="flex justify-between items-center text-sm text-gray-500">
+                                    <span><i class="far fa-clock ml-1"></i> منذ 5 ساعات</span>
+                                    <span><i class="far fa-eye ml-1"></i> 3,120 مشاهدة</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- قسم الأخبار المتنوعة -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-bold text-secondary border-r-4 border-primary pr-3 mb-6">آخر الأخبار</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- خبر 1 -->
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden news-card">
+                            <img src="https://picsum.photos/400/250?random=3" alt="خبر" class="w-full h-40 object-cover">
+                            <div class="p-4">
+                                <span class="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded">تكنولوجيا</span>
+                                <h3 class="font-bold mt-2 mb-2">شركة محلية تطلق أحدث هواتفها الذكية</h3>
+                                <p class="text-gray-600 text-sm">أعلنت شركة محلية رائدة عن إطلاق الجيل الجديد من هواتفها الذكية.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- خبر 2 -->
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden news-card">
+                            <img src="https://picsum.photos/400/250?random=4" alt="خبر" class="w-full h-40 object-cover">
+                            <div class="p-4">
+                                <span class="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded">صحة</span>
+                                <h3 class="font-bold mt-2 mb-2">تطورات جديدة في علاج الأمراض المزمنة</h3>
+                                <p class="text-gray-600 text-sm">باحثون محليون يعلنون عن تقدم كبير في علاج أحد الأمراض المزمنة.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- خبر 3 -->
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden news-card">
+                            <img src="https://picsum.photos/400/250?random=5" alt="خبر" class="w-full h-40 object-cover">
+                            <div class="p-4">
+                                <span class="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded">ثقافة</span>
+                                <h3 class="font-bold mt-2 mb-2">معرض فني دولي يستضيف أعمال فنانين محليين</h3>
+                                <p class="text-gray-600 text-sm">ينطلق معرض الفنون الدولي بمشاركة عشرات الفنانين من مختلف أنحاء العالم.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- العمود الأيمن - الإعلانات والأقسام الجانبية -->
+            <div class="lg:col-span-1">
+                <!-- إعلان -->
+                <div class="bg-gradient-to-r from-primary to-secondary text-white p-6 rounded-lg shadow-lg mb-6 text-center ad-banner">
+                    <h3 class="text-xl font-bold mb-2">خصم خاص لمدة محدودة!</h3>
+                    <p class="mb-4">استفد من عروضنا الحصرية على مجموعة واسعة من المنتجات والخدمات</p>
+                    <button class="bg-white text-primary font-bold px-6 py-2 rounded-full hover:bg-gray-100 transition duration-300">اطلع الآن</button>
+                </div>
+                
+                <!-- إعلان آخر -->
+                <div class="bg-white border-2 border-accent p-4 rounded-lg shadow mb-6 text-center">
+                    <img src="https://picsum.photos/300/150?random=6" alt="إعلان" class="w-full h-32 object-cover rounded mb-3">
+                    <h3 class="font-bold text-lg mb-2">تطبيق الجوال الجديد</h3>
+                    <p class="text-gray-600 mb-3">حمّل تطبيقنا الجديد واحصل على آخر الأخبار فور نشرها</p>
+                    <div class="flex justify-center space-x-2 space-x-reverse">
+                        <button class="bg-gray-800 text-white px-4 py-2 rounded flex items-center">
+                            <i class="fab fa-apple ml-1"></i> App Store
+                        </button>
+                        <button class="bg-green-600 text-white px-4 py-2 rounded flex items-center">
+                            <i class="fab fa-google-play ml-1"></i> Play Store
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- أكثر الأخبار مشاهدة -->
+                <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+                    <h3 class="text-xl font-bold text-secondary border-b pb-2 mb-4">الأكثر مشاهدة</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start hover:bg-gray-50 p-2 rounded transition duration-300">
+                            <span class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mt-1 ml-3">1</span>
+                            <div>
+                                <h4 class="font-medium">تقرير خاص: مستقبل الطاقة المتجددة في المنطقة</h4>
+                                <p class="text-gray-500 text-sm">1,250 مشاهدة</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start hover:bg-gray-50 p-2 rounded transition duration-300">
+                            <span class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mt-1 ml-3">2</span>
+                            <div>
+                                <h4 class="font-medium">لقاء حصري مع وزير التعليم حول المناهج الجديدة</h4>
+                                <p class="text-gray-500 text-sm">980 مشاهدة</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start hover:bg-gray-50 p-2 rounded transition duration-300">
+                            <span class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-sm mt-1 ml-3">3</span>
+                            <div>
+                                <h4 class="font-medium">أسعار النفط تشهد ارتفاعاً قياسياً في الأسواق العالمية</h4>
+                                <p class="text-gray-500 text-sm">875 مشاهدة</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- النشرة البريدية -->
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <h3 class="text-xl font-bold text-secondary border-b pb-2 mb-4">النشرة البريدية</h3>
+                    <p class="text-gray-600 mb-4">اشترك في نشرتنا البريدية لتصلك آخر الأخبار والعروض</p>
+                    <form class="space-y-3">
+                        <input type="text" placeholder="اسمك" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        <input type="email" placeholder="بريدك الإلكتروني" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        <button type="submit" class="w-full bg-primary text-white py-2 rounded-lg hover:bg-secondary transition duration-300">اشترك الآن</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- التذييل -->
+    <footer class="bg-secondary text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">أخبار اليوم</h3>
+                    <p class="text-gray-300">موقع إخباري متكامل يقدم آخر الأخبار المحلية والعالمية في شتى المجالات.</p>
+                    <div class="flex space-x-3 space-x-reverse mt-4">
+                        <a href="#" class="bg-white text-primary w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-200 transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="bg-white text-primary w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-200 transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="bg-white text-primary w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-200 transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">الأقسام</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition duration-300">أخبار عاجلة</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition duration-300">رياضة</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition duration-300">اقتصاد</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition duration-300">تكنولوجيا</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition duration-300">صحة</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">روابط سريعة</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition duration-300">عن الموقع</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition duration-300">اتصل بنا</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition duration-300">سياسة الخصوصية</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition duration-300">شروط الاستخدام</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition duration-300">الإعلانات</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">اتصل بنا</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt ml-2 mt-1"></i>
+                            <span>شارع الأخبار، المدينة، الدولة</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone ml-2"></i>
+                            <span>+1234567890</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope ml-2"></i>
+                            <span>info@akhbar-alyoum.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>جميع الحقوق محفوظة &copy; 2023 أخبار اليوم</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // إضافة تأثيرات تفاعلية بسيطة
+        document.addEventListener('DOMContentLoaded', function() {
+            // تأثير عند التمرير على البطاقات
+            const cards = document.querySelectorAll('.news-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = '';
+                });
+            });
+            
+            // تأثير على الروابط
+            const links = document.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    if(this.getAttribute('href') && this.getAttribute('href').startsWith('#')) {
+                        this.style.transform = 'translateX(-5px)';
+                    }
+                });
+                
+                link.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

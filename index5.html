@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع أخباري احترافي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-gray-800 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold">أخبارنا</a>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="#" class="hover:text-gray-300">الرئيسية</a></li>
+                    <li><a href="#" class="hover:text-gray-300">الأخبار</a></li>
+                    <li><a href="#" class="hover:text-gray-300">الرياضة</a></li>
+                    <li><a href="#" class="hover:text-gray-300">الاقتصاد</a></li>
+                    <li><a href="#" class="hover:text-gray-300">التكنولوجيا</a></li>
+                </ul>
+            </nav>
+            <button id="lang-toggle" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                English
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto my-8 px-4">
+        <!-- Breaking News -->
+        <div class="bg-red-500 text-white p-3 rounded mb-6">
+            <div class="flex items-center space-x-2">
+                <span class="font-bold">أهم الأخبار:</span>
+                <marquee class="flex-1">تم إطلاق مشروع جديد لدعم الاقتصاد المحلي في العراق</marquee>
+            </div>
+        </div>
+
+        <!-- News Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- News Card 1 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                <img src="https://via.placeholder.com/400x250" alt="عنوان الخبر" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-bold mb-2">وزير النفط يعلن عن زيادة الإنتاج خلال العام المقبل</h2>
+                    <p class="text-gray-700 mb-4">أعلن وزير النفط العراقي عن خطة لزيادة إنتاج النفط بنسبة 10% خلال العام المقبل، مما سيساهم في دعم الاقتصاد الوطني.</p>
+                    <a href="#" class="text-blue-500 hover:underline">اقرأ المزيد</a>
+                </div>
+            </div>
+
+            <!-- News Card 2 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                <img src="https://via.placeholder.com/400x250" alt="عنوان الخبر" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-bold mb-2">فريق كرة القدم الوطني يتأهل إلى النهائي</h2>
+                    <p class="text-gray-700 mb-4">حقق فريق كرة القدم الوطني فوزاً تاريخياً على فريق المنافس، مؤهلاً نفسه إلى النهائي في بطولة القارة.</p>
+                    <a href="#" class="text-blue-500 hover:underline">اقرأ المزيد</a>
+                </div>
+            </div>
+
+            <!-- News Card 3 -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                <img src="https://via.placeholder.com/400x250" alt="عنوان الخبر" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-bold mb-2">مؤتمر دولي للتكنولوجيا في بغداد</h2>
+                    <p class="text-gray-700 mb-4">ستستضيف بغداد مؤتمراً دولياً للتكنولوجيا خلال الشهر المقبل، بمشاركة خبراء من جميع أنحاء العالم.</p>
+                    <a href="#" class="text-blue-500 hover:underline">اقرأ المزيد</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white p-4 text-center">
+        <p>© 2025 موقع أخبارنا. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <!-- Language Toggle Script -->
+    <script>
+        const langToggle = document.getElementById('lang-toggle');
+        langToggle.addEventListener('click', () => {
+            const html = document.documentElement;
+            if (html.lang === 'ar') {
+                html.lang = 'en';
+                html.setAttribute('dir', 'ltr');
+                langToggle.textContent = 'العربية';
+                document.title = "Professional News Website";
+            } else {
+                html.lang = 'ar';
+                html.setAttribute('dir', 'rtl');
+                langToggle.textContent = 'English';
+                document.title = "موقع أخباري احترافي";
+            }
+        });
+    </script>
+</body>
+</html>
