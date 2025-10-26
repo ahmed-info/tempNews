@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>السياسة - NewsHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body[dir="rtl"] {
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body[dir="ltr"] {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .breaking-news-ticker {
+            animation: ticker 30s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .language-switcher {
+            transition: all 0.3s ease;
+        }
+
+        .ad-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body class="bg-gray-100" dir="rtl">
+    <!-- الهيدر -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <!-- الشريط العلوي -->
+            <div class="flex flex-col md:flex-row justify-between items-center py-3 border-b border-gray-200">
+                <!-- الشعار وتاريخ اليوم -->
+                <div class="flex items-center mb-2 md:mb-0">
+                    <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center text-white font-bold text-xl">N</div>
+                    <h1 class="mr-2 text-xl md:text-2xl font-bold text-gray-800">NewsHub</h1>
+                    <span class="text-gray-500 text-sm hidden md:block mr-4" id="current-date"></span>
+                </div>
+
+                <!-- شريط البحث وتبديل اللغة -->
+                <div class="flex items-center space-x-4 space-x-reverse w-full md:w-auto">
+                    <!-- تبديل اللغة -->
+                    <div class="flex items-center bg-gray-100 rounded-full p-1 language-switcher" id="language-switcher">
+                        <button class="px-3 py-1 rounded-full bg-white shadow text-sm font-medium transition-all duration-300" id="ar-btn">العربية</button>
+                        <button class="px-3 py-1 rounded-full text-gray-600 text-sm font-medium transition-all duration-300" id="en-btn">English</button>
+                    </div>
+
+                    <!-- شريط البحث -->
+                    <div class="relative flex-grow md:w-48">
+                        <input type="text" placeholder="ابحث في الأخبار..." class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 text-sm">
+                        <button class="absolute left-3 top-2 text-gray-500">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- القائمة الرئيسية -->
+            <nav class="py-3">
+                <ul class="flex flex-wrap justify-center md:justify-between space-x-6 space-x-reverse text-sm md:text-base">
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="الرئيسية" data-en="Home">الرئيسية</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-red-600 border-b-2 border-red-600" data-ar="السياسة" data-en="Politics">السياسة</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="الاقتصاد" data-en="Economy">الاقتصاد</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="الرياضة" data-en="Sports">الرياضة</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="التكنولوجيا" data-en="Technology">التكنولوجيا</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="الصحة" data-en="Health">الصحة</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="الفنون" data-en="Arts">الفنون</a></li>
+                    <li class="mb-2 md:mb-0"><a href="#" class="font-medium text-gray-700 hover:text-red-600 transition-colors" data-ar="المزيد" data-en="More">المزيد</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- الأخبار العاجلة -->
+    <div class="bg-red-600 text-white py-2 overflow-hidden">
+        <div class="container mx-auto px-4 flex items-center">
+            <span class="bg-red-800 px-3 py-1 rounded text-sm font-bold ml-4" data-ar="عاجل" data-en="Breaking">عاجل</span>
+            <div class="flex-1 overflow-hidden">
+                <div class="breaking-news-ticker whitespace-nowrap">
+                    <span data-ar="رئيس الوزراء يعلن عن إصلاحات سياسية جديدة خلال كلمته أمام البرلمان • وزير الخارجية يبدأ جولة دبلوماسية في عواصم أوروبية" data-en="Prime Minister announces new political reforms in speech to Parliament • Foreign Minister begins diplomatic tour of European capitals">رئيس الوزراء يعلن عن إصلاحات سياسية جديدة خلال كلمته أمام البرلمان • وزير الخارجية يبدأ جولة دبلوماسية في عواصم أوروبية</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- عنوان القسم -->
+    <div class="bg-gradient-to-r from-red-50 to-orange-50 py-8 border-b-4 border-red-600">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center">
+                <div class="w-16 h-16 bg-red-600 rounded-lg flex items-center justify-center text-white mr-4">
+                    <i class="fas fa-landmark text-3xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-800" data-ar="الأخبار السياسية" data-en="Political News">الأخبار السياسية</h2>
+                    <p class="text-gray-600 mt-1" data-ar="آخر التطورات السياسية المحلية والعالمية" data-en="Latest local and international political developments">آخر التطورات السياسية المحلية والعالمية</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container mx-auto px-4 py-8">
+        
+        <!-- الخبر الرئيسي -->
+        <article class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Featured" class="w-full h-full object-cover min-h-[300px]">
+                    <div class="absolute top-4 right-4">
+                        <span class="category-badge bg-red-600 text-white" data-ar="خبر رئيسي" data-en="Main Story">خبر رئيسي</span>
+                    </div>
+                </div>
+                <div class="p-8 flex flex-col justify-center">
+                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                        <i class="far fa-clock ml-2"></i>
+                        <span data-ar="منذ ساعة واحدة" data-en="1 hour ago">منذ ساعة واحدة</span>
+                        <span class="mx-3">•</span>
+                        <i class="far fa-eye ml-2"></i>
+                        <span data-ar="2,453 مشاهدة" data-en="2,453 views">2,453 مشاهدة</span>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4" data-ar="قمة دولية تاريخية تجمع قادة أكبر الاقتصادات العالمية" data-en="Historic international summit brings together leaders of world's largest economies">قمة دولية تاريخية تجمع قادة أكبر الاقتصادات العالمية</h2>
+                    <p class="text-gray-600 leading-relaxed mb-6" data-ar="في تطور دبلوماسي بارز، اجتمع قادة مجموعة العشرين في العاصمة لمناقشة التحديات الاقتصادية والسياسية العالمية. وشهدت القمة مناقشات مكثفة حول القضايا الملحة بما في ذلك التغير المناخي، الأمن الغذائي، والتعاون الدولي في مواجهة التحديات المشتركة." data-en="In a prominent diplomatic development, G20 leaders met in the capital to discuss global economic and political challenges. The summit witnessed intensive discussions on pressing issues including climate change, food security, and international cooperation in facing shared challenges.">في تطور دبلوماسي بارز، اجتمع قادة مجموعة العشرين في العاصمة لمناقشة التحديات الاقتصادية والسياسية العالمية. وشهدت القمة مناقشات مكثفة حول القضايا الملحة بما في ذلك التغير المناخي، الأمن الغذائي، والتعاون الدولي في مواجهة التحديات المشتركة.</p>
+                    <div class="flex items-center">
+                        <button class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium transition-colors" data-ar="اقرأ المزيد" data-en="Read More">اقرأ المزيد</button>
+                        <button class="mr-3 text-gray-600 hover:text-red-600 transition-colors">
+                            <i class="far fa-bookmark text-xl"></i>
+                        </button>
+                        <button class="mr-3 text-gray-600 hover:text-red-600 transition-colors">
+                            <i class="fas fa-share-alt text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- إعلان أفقي -->
+        <div class="mb-8">
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg overflow-hidden shadow-lg relative">
+                <span class="ad-badge" data-ar="إعلان" data-en="Ad">إعلان</span>
+                <div class="flex flex-col md:flex-row items-center justify-between p-6">
+                    <div class="text-white mb-4 md:mb-0">
+                        <span class="text-xs uppercase tracking-wide opacity-75" data-ar="شريك إعلامي" data-en="Media Partner">شريك إعلامي</span>
+                        <h3 class="text-2xl font-bold mt-2" data-ar="تابع أهم الأحداث السياسية" data-en="Follow the Most Important Political Events">تابع أهم الأحداث السياسية</h3>
+                        <p class="mt-2 text-sm opacity-90" data-ar="تحليلات عميقة وتغطية شاملة من خبراء السياسة" data-en="In-depth analysis and comprehensive coverage from political experts">تحليلات عميقة وتغطية شاملة من خبراء السياسة</p>
+                    </div>
+                    <button class="bg-white text-blue-600 px-6 py-2 rounded-full font-medium text-sm hover:bg-gray-100 transition-colors" data-ar="اشترك الآن" data-en="Subscribe Now">اشترك الآن</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- التصنيفات الفرعية -->
+        <div class="mb-8">
+            <div class="flex flex-wrap gap-3">
+                <button class="px-4 py-2 bg-red-600 text-white rounded-full text-sm font-medium shadow-md" data-ar="الكل" data-en="All">الكل</button>
+                <button class="px-4 py-2 bg-white text-gray-700 hover:bg-gray-100 rounded-full text-sm font-medium shadow-md transition-colors" data-ar="محلي" data-en="Local">محلي</button>
+                <button class="px-4 py-2 bg-white text-gray-700 hover:bg-gray-100 rounded-full text-sm font-medium shadow-md transition-colors" data-ar="عربي" data-en="Arab">عربي</button>
+                <button class="px-4 py-2 bg-white text-gray-700 hover:bg-gray-100 rounded-full text-sm font-medium shadow-md transition-colors" data-ar="عالمي" data-en="International">عالمي</button>
+                <button class="px-4 py-2 bg-white text-gray-700 hover:bg-gray-100 rounded-full text-sm font-medium shadow-md transition-colors" data-ar="تحليلات" data-en="Analysis">تحليلات</button>
+                <button class="px-4 py-2 bg-white text-gray-700 hover:bg-gray-100 rounded-full text-sm font-medium shadow-md transition-colors" data-ar="حوارات" data-en="Interviews">حوارات</button>
+            </div>
+        </div>
+
+        <!-- شبكة الأخبار -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- العمود الرئيسي -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- خبر 1 -->
+                <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="flex flex-col md:flex-row">
+                        <div class="md:w-2/5">
+                            <img src="https://images.unsplash.com/photo-1541872703-74c5e44368f9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="News" class="w-full h-full object-cover min-h-[200px]">
+                        </div>
+                        <div class="md:w-3/5 p-6">
+                            <div class="flex items-center mb-2">
+                                <span class="category-badge bg-blue-100 text-blue-800" data-ar="محلي" data-en="Local">محلي</span>
+                                <span class="text-xs text-gray-500 mr-2" data-ar="منذ ساعتين" data-en="2 hours ago">منذ ساعتين</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-red-600 cursor-pointer transition-colors" data-ar="البرلمان يصوت على حزمة قوانين إصلاحية جديدة" data-en="Parliament votes on new reform legislation package">البرلمان يصوت على حزمة قوانين إصلاحية جديدة</h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-2" data-ar="في جلسة استثنائية، صوت أعضاء البرلمان على مجموعة من القوانين الإصلاحية التي تهدف إلى تعزيز الشفافية وتطوير الأداء الحكومي في مختلف القطاعات." data-en="In an extraordinary session, members of parliament voted on a set of reform laws aimed at enhancing transparency and developing government performance in various sectors.">في جلسة استثنائية، صوت أعضاء البرلمان على مجموعة من القوانين الإصلاحية التي تهدف إلى تعزيز الشفافية وتطوير الأداء الحكومي في مختلف القطاعات.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-xs text-gray-500">
+                                    <i class="far fa-eye ml-1"></i>
+                                    <span data-ar="1,234 مشاهدة" data-en="1,234 views">1,234 مشاهدة</span>
+                                </div>
+                                <a href="#" class="text-red-600 font-medium text-sm hover:underline" data-ar="اقرأ التفاصيل" data-en="Read Details">اقرأ التفاصيل →</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- خبر 2 -->
+                <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="flex flex-col md:flex-row">
+                        <div class="md:w-2/5">
+                            <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="News" class="w-full h-full object-cover min-h-[200px]">
+                        </div>
+                        <div class="md:w-3/5 p-6">
+                            <div class="flex items-center mb-2">
+                                <span class="category-badge bg-green-100 text-green-800" data-ar="عربي" data-en="Arab">عربي</span>
+                                <span class="text-xs text-gray-500 mr-2" data-ar="منذ 3 ساعات" data-en="3 hours ago">منذ 3 ساعات</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-red-600 cursor-pointer transition-colors" data-ar="اجتماع طارئ لوزراء الخارجية العرب لمناقشة القضايا الإقليمية" data-en="Emergency meeting of Arab foreign ministers to discuss regional issues">اجتماع طارئ لوزراء الخارجية العرب لمناقشة القضايا الإقليمية</h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-2" data-ar="دعت جامعة الدول العربية إلى عقد اجتماع طارئ لوزراء الخارجية لبحث التطورات الإقليمية الأخيرة وتنسيق المواقف العربية المشتركة." data-en="The Arab League called for an emergency meeting of foreign ministers to discuss recent regional developments and coordinate common Arab positions.">دعت جامعة الدول العربية إلى عقد اجتماع طارئ لوزراء الخارجية لبحث التطورات الإقليمية الأخيرة وتنسيق المواقف العربية المشتركة.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-xs text-gray-500">
+                                    <i class="far fa-eye ml-1"></i>
+                                    <span data-ar="2,156 مشاهدة" data-en="2,156 views">2,156 مشاهدة</span>
+                                </div>
+                                <a href="#" class="text-red-600 font-medium text-sm hover:underline" data-ar="اقرأ التفاصيل" data-en="Read Details">اقرأ التفاصيل →</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- إعلان مدمج -->
+                <div class="bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg p-6 text-white text-center shadow-lg relative">
+                    <span class="ad-badge" data-ar="إعلان" data-en="Ad">إعلان</span>
+                    <div class="bg-white bg-opacity-20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-newspaper text-3xl"></i>
+                    </div>
+                    <h4 class="font-bold text-xl mb-2" data-ar="اشترك في النشرة السياسية اليومية" data-en="Subscribe to Daily Political Newsletter">اشترك في النشرة السياسية اليومية</h4>
+                    <p class="text-sm opacity-90 mb-4" data-ar="احصل على ملخص يومي لأهم الأحداث السياسية" data-en="Get a daily summary of the most important political events">احصل على ملخص يومي لأهم الأحداث السياسية</p>
+                    <button class="bg-white text-purple-600 px-6 py-2 rounded-full font-medium text-sm hover:bg-gray-100 transition-colors" data-ar="اشترك مجاناً" data-en="Subscribe Free">اشترك مجاناً</button>
+                </div>
+
+                <!-- خبر 3 -->
+                <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="flex flex-col md:flex-row">
+                        <div class="md:w-2/5">
+                            <img src="https://images.unsplash.com/photo-1523995462485-3d171b5c8fa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="News" class="w-full h-full object-cover min-h-[200px]">
+                        </div>
+                        <div class="md:w-3/5 p-6">
+                            <div class="flex items-center mb-2">
+                                <span class="category-badge bg-orange-100 text-orange-800" data-ar="عالمي" data-en="International">عالمي</span>
+                                <span class="text-xs text-gray-500 mr-2" data-ar="منذ 4 ساعات" data-en="4 hours ago">منذ 4 ساعات</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-red-600 cursor-pointer transition-colors" data-ar="الأمم المتحدة تدعو لوقف فوري للأعمال العدائية" data-en="UN calls for immediate cessation of hostilities">الأمم المتحدة تدعو لوقف فوري للأعمال العدائية</h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-2" data-ar="أصدر الأمين العام للأمم المتحدة بياناً يدعو فيه جميع الأطراف إلى وقف فوري للأعمال العدائية والعودة إلى طاولة المفاوضات لإيجاد حل سلمي." data-en="The UN Secretary-General issued a statement calling on all parties to immediately cease hostilities and return to the negotiating table to find a peaceful solution.">أصدر الأمين العام للأمم المتحدة بياناً يدعو فيه جميع الأطراف إلى وقف فوري للأعمال العدائية والعودة إلى طاولة المفاوضات لإيجاد حل سلمي.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-xs text-gray-500">
+                                    <i class="far fa-eye ml-1"></i>
+                                    <span data-ar="3,421 مشاهدة" data-en="3,421 views">3,421 مشاهدة</span>
+                                </div>
+                                <a href="#" class="text-red-600 font-medium text-sm hover:underline" data-ar="اقرأ التفاصيل" data-en="Read Details">اقرأ التفاصيل →</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- خبر 4 -->
+                <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="flex flex-col md:flex-row">
+                        <div class="md:w-2/5">
+                            <img src="https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="News" class="w-full h-full object-cover min-h-[200px]">
+                        </div>
+                        <div class="md:w-3/5 p-6">
+                            <div class="flex items-center mb-2">
+                                <span class="category-badge bg-purple-100 text-purple-800" data-ar="تحليل" data-en="Analysis">تحليل</span>
+                                <span class="text-xs text-gray-500 mr-2" data-ar="منذ 5 ساعات" data-en="5 hours ago">منذ 5 ساعات</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-red-600 cursor-pointer transition-colors" data-ar="تحليل: تأثير السياسات الجديدة على المشهد السياسي" data-en="Analysis: Impact of new policies on political landscape">تحليل: تأثير السياسات الجديدة على المشهد السياسي</h3>
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-2" data-ar="خبير سياسي يحلل التداعيات المحتملة للقرارات السياسية الأخيرة وتأثيرها على التوازنات السياسية المحلية والإقليمية." data-en="A political expert analyzes the potential ramifications of recent political decisions and their impact on local and regional political balances.">خبير سياسي يحلل التداعيات المحتملة للقرارات السياسية الأخيرة وتأثيرها على التوازنات السياسية المحلية والإقليمية.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-xs text-gray-500">
+                                    <i class="far fa-eye ml-1"></i>
+                                    <span data-ar="1,876 مشاهدة" data-en="1,876 views">1,876 مشاهدة</span>
+                                </div>
+                                <a href="#" class="text-red-600 font-medium text-sm hover:underline" data-ar="اقرأ التفاصيل" data-en="Read Details">اقرأ التفاصيل →</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- العمود الجانبي -->
+            <div class="space-y-6">
+                
+                <!-- أبرز الأخبار -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-bold border-r-4 border-red-600 pr-3 mb-4" data-ar="أبرز الأخبار" data-en="Top Stories">أبرز الأخبار</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="pb-4 border-b border-gray-200">
+                            <div class="flex items-start">
+                                <span class="text-2xl font-bold text-red-600 ml-3">1</span>
+                                <div>
+                                    <h4 class="font-bold text-sm hover:text-red-600 cursor-pointer transition-colors" data-ar="وزير الداخلية يعلن عن خطة أمنية شاملة" data-en="Interior Minister announces comprehensive security plan">وزير الداخلية يعلن عن خطة أمنية شاملة</h4>
+                                    <span class="text-xs text-gray-500" data-ar="منذ 30 دقيقة" data-en="30 minutes ago">منذ 30 دقيقة</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pb-4 border-b border-gray-200">
+                            <div class="flex items-start">
+                                <span class="text-2xl font-bold text-red-600 ml-3">2</span>
+                                <div>
+                                    <h4 class="font-bold text-sm hover:text-red-600 cursor-pointer transition-colors" data-ar="مجلس الوزراء يوافق على الموازنة العامة" data-en="Cabinet approves general budget">مجلس الوزراء يوافق على الموازنة العامة</h4>
+                                    <span class="text-xs text-gray-500" data-ar="منذ ساعة" data-en="1 hour ago">منذ ساعة</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pb-4 border-b border-gray-200">
+                            <div class="flex items-start">
+                                <span class="text-2xl font-bold text-red-600 ml-3">3</span>
+                                <div>
+                                    <h4 class="font-bold text-sm hover:text-red-600 cursor-pointer transition-colors" data-ar="اتفاقية تعاون ثنائي مع دولة أوروبية" data-en="Bilateral cooperation agreement with European country">اتفاقية تعاون ثنائي مع دولة أوروبية</h4>
+                                    <span class="text-xs text-gray-500" data-ar="منذ ساعتين" data-en="2 hours ago">منذ ساعتين</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pb-4 border-b border-gray-200">
+                            <div class="flex items-start">
+                                <span class="text-2xl font-bold text-red-600 ml-3">4</span>
+                                <div>
+                                    <h4 class="font-bold text-sm hover:text-red-600 cursor-pointer transition-colors" data-ar="تعيينات جديدة في مناصب حكومية عليا" data-en="New appointments to senior government positions">تعيينات جديدة في مناصب حكومية عليا</h4>
+                                    <span class="text-xs text-gray-500" data-ar="منذ 3 ساعات" data-en="3 hours ago">منذ 3 ساعات</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-start">
+                                <span class="text-2xl font-bold text-red-600 ml-3">5</span>
+                                <div>
+                                    <h4 class="font-bold text-sm hover:text-red-600 cursor-pointer transition-colors" data-ar="جلسة برلمانية استثنائية الأسبوع المقبل" data-en="Extraordinary parliamentary session next week">جلسة برلمانية استثنائية الأسبوع المقبل</h4>
+                                    <span class="text-xs text-gray-500" data-ar="منذ 4 ساعات" data-en="4 hours ago">منذ 4 ساعات</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- إعلان جانبي -->
+                <div class="bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg p-6 text-white text-center shadow-lg relative">
+                    <span class="ad-badge" data-ar="إعلان" data-en="Ad">إعلان</span>
+                    <div class="bg-white bg-opacity-20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-book-open text-3xl"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-2" data-ar="كتب سياسية مميزة" data-en="Featured Political Books">كتب سياسية مميزة</h4>
+                    <p class="text-sm opacity-90 mb-4" data-ar="اكتشف أفضل الإصدارات في السياسة والعلاقات الدولية" data-en="Discover the best publications in politics and international relations">اكتشف أفضل الإصدارات في السياسة والعلاقات الدولية</p>
+                    <button class="bg-white text-teal-600 px-6 py-2 rounded-full font-medium text-sm w-full hover:bg-gray-100 transition-colors" data-ar="تصفح المكتبة" data-en="Browse Library">تصفح المكتبة</button>
+                </div>
+
+                <!-- التقويم السياسي -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-bold border-r-4 border-red-600 pr-3 mb-4" data-ar="التقويم السياسي" data-en="Political Calendar">التقويم السياسي</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="bg-red-100 rounded-lg p-2 text-center ml-3 min-w-[50px]">
+                                <div class="text-xs text-red-600 font-medium" data-ar="نوفمبر" data-en="Nov">نوفمبر</div>
+                                <div class="text-xl font-bold text-red-600">28</div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm" data-ar="اجتماع مجلس الأمن القومي" data-en="National Security Council Meeting">اجتماع مجلس الأمن القومي</h4>
+                                <p class="text-xs text-gray-500 mt-1" data-ar="10:00 صباحاً" data-en="10:00 AM">10:00 صباحاً</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 rounded-lg p-2 text-center ml-3 min-w-[50px]">
+                                <div class="text-xs text-blue-600 font-medium" data-ar="نوفمبر" data-en="Nov">نوفمبر</div>
+                                <div class="text-xl font-bold text-blue-600">30</div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm" data-ar="زيارة رئيس الوزراء للمحافظات" data-en="Prime Minister's visit to provinces">زيارة رئيس الوزراء للمحافظات</h4>
+                                <p class="text-xs text-gray-500 mt-1" data-ar="طوال اليوم" data-en="All day">طوال اليوم</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-green-100 rounded-lg p-2 text-center ml-3 min-w-[50px]">
+                                <div class="text-xs text-green-600 font-medium" data-ar="ديسمبر" data-en="Dec">ديسمبر</div>
+                                <div class="text-xl font-bold text-green-600">02</div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm" data-ar="القمة الإقليمية للتعاون" data-en="Regional Cooperation Summit">القمة الإقليمية للتعاون</h4>
+                                <p class="text-xs text-gray-500 mt-1" data-ar="العاصمة" data-en="Capital">العاصمة</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- تابعنا -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-bold border-r-4 border-red-600 pr-3 mb-4" data-ar="تابعنا" data-en="Follow Us">تابعنا</h3>
+                    
+                    <div class="space-y-3">
+                        <a href="#" class="flex items-center justify-between p-3 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
+                            <div class="flex items-center">
+                                <i class="fab fa-facebook-f text-blue-600 text-xl w-8"></i>
+                                <span class="font-medium text-gray-700" data-ar="فيسبوك" data-en="Facebook">فيسبوك</span>
+                            </div>
+                            <span class="text-sm text-gray-500">125K</span>
+                        </a>
+
+                        <a href="#" class="flex items-center justify-between p-3 bg-sky-50 hover:bg-sky-100 rounded-lg transition-colors">
+                            <div class="flex items-center">
+                                <i class="fab fa-twitter text-sky-600 text-xl w-8"></i>
+                                <span class="font-medium text-gray-700" data-ar="تويتر" data-en="Twitter">تويتر</span>
+                            </div>
+                            <span class="text-sm text-gray-500">89K</span>
+                        </a>
+
+                        <a href="#" class="flex items-center justify-between p-3 bg-red-50 hover:bg-red-100 rounded-lg transition-colors">
+                            <div class="flex items-center">
+                                <i class="fab fa-youtube text-red-600 text-xl w-8"></i>
+                                <span class="font-medium text-gray-700" data-ar="يوتيوب" data-en="YouTube">يوتيوب</span>
+                            </div>
+                            <span class="text-sm text-gray-500">210K</span>
+                        </a>
+
+                        <a href="#" class="flex items-center justify-between p-3 bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors">
+                            <div class="flex items-center">
+                                <i class="fab fa-instagram text-purple-600 text-xl w-8"></i>
+                                <span class="font-medium text-gray-700" data-ar="انستغرام" data-en="Instagram">انستغرام</span>
+                            </div>
+                            <span class="text-sm text-gray-500">156K</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- قسم المقالات والتحليلات -->
+        <div class="mt-12">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold" data-ar="مقالات وتحليلات" data-en="Articles & Analysis">مقالات وتحليلات</h2>
+                <a href="#" class="text-red-600 font-medium text-sm flex items-center hover:underline" data-ar="عرض الكل" data-en="View All">عرض الكل <i class="fas fa-arrow-left mr-1"></i></a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- مقال 1 -->
+                <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    <img src="https://images.unsplash.com/photo-1432821596592-e2c18b78144f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Article" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex items-center mb-3">
+                            <img src="https://i.pravatar.cc/40?img=12" alt="Author" class="w-10 h-10 rounded-full ml-3">
+                            <div>
+                                <p class="font-medium text-sm" data-ar="د. محمد الأحمد" data-en="Dr. Mohammed Al-Ahmad">د. محمد الأحمد</p>
+                                <p class="text-xs text-gray-500" data-ar="محلل سياسي" data-en="Political Analyst">محلل سياسي</p>
+                            </div>
+                        </div>
+                        <span class="category-badge bg-purple-100 text-purple-800 mb-2" data-ar="رأي" data-en="Opinion">رأي</span>
+                        <h3 class="font-bold text-lg mb-2 hover:text-red-600 cursor-pointer transition-colors" data-ar="مستقبل الديمقراطية في المنطقة" data-en="The Future of Democracy in the Region">مستقبل الديمقراطية في المنطقة</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3 mb-4" data-ar="تحليل معمق للتحولات الديمقراطية في المنطقة والعوامل المؤثرة في مسارها المستقبلي في ظل التحديات الراهنة." data-en="An in-depth analysis of democratic transformations in the region and factors affecting their future trajectory amid current challenges.">تحليل معمق للتحولات الديمقراطية في المنطقة والعوامل المؤثرة في مسارها المستقبلي في ظل التحديات الراهنة.</p>
+                        <div class="flex items-center justify-between text-xs text-gray-500">
+                            <span data-ar="قراءة 5 دقائق" data-en="5 min read">قراءة 5 دقائق</span>
+                            <span data-ar="منذ يوم" data-en="1 day ago">منذ يوم</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- مقال 2 -->
+                <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Article" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex items-center mb-3">
+                            <img src="https://i.pravatar.cc/40?img=28" alt="Author" class="w-10 h-10 rounded-full ml-3">
+                            <div>
+                                <p class="font-medium text-sm" data-ar="سارة العلي" data-en="Sarah Al-Ali">سارة العلي</p>
+                                <p class="text-xs text-gray-500" data-ar="خبيرة علاقات دولية" data-en="International Relations Expert">خبيرة علاقات دولية</p>
+                            </div>
+                        </div>
+                        <span class="category-badge bg-orange-100 text-orange-800 mb-2" data-ar="تحليل" data-en="Analysis">تحليل</span>
+                        <h3 class="font-bold text-lg mb-2 hover:text-red-600 cursor-pointer transition-colors" data-ar="التوازنات الإقليمية الجديدة" data-en="New Regional Balances">التوازنات الإقليمية الجديدة</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3 mb-4" data-ar="نظرة شاملة على التحولات في ميزان القوى الإقليمي وتأثيرها على السياسات الخارجية للدول." data-en="A comprehensive look at transformations in the regional balance of power and their impact on countries' foreign policies.">نظرة شاملة على التحولات في ميزان القوى الإقليمي وتأثيرها على السياسات الخارجية للدول.</p>
+                        <div class="flex items-center justify-between text-xs text-gray-500">
+                            <span data-ar="قراءة 7 دقائق" data-en="7 min read">قراءة 7 دقائق</span>
+                            <span data-ar="منذ يومين" data-en="2 days ago">منذ يومين</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- مقال 3 -->
+                <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    <img src="https://images.unsplash.com/photo-1569098644584-210bcd375b59?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Article" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <div class="flex items-center mb-3">
+                            <img src="https://i.pravatar.cc/40?img=33" alt="Author" class="w-10 h-10 rounded-full ml-3">
+                            <div>
+                                <p class="font-medium text-sm" data-ar="أحمد الخطيب" data-en="Ahmed Al-Khatib">أحمد الخطيب</p>
+                                <p class="text-xs text-gray-500" data-ar="كاتب سياسي" data-en="Political Writer">كاتب سياسي</p>
+                            </div>
+                        </div>
+                        <span class="category-badge bg-blue-100 text-blue-800 mb-2" data-ar="حوار" data-en="Interview">حوار</span>
+                        <h3 class="font-bold text-lg mb-2 hover:text-red-600 cursor-pointer transition-colors" data-ar="حوار مع وزير الخارجية السابق" data-en="Interview with Former Foreign Minister">حوار مع وزير الخارجية السابق</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3 mb-4" data-ar="حوار شامل حول التحديات الدبلوماسية والسياسة الخارجية ورؤية مستقبلية للعلاقات الدولية." data-en="A comprehensive dialogue on diplomatic challenges, foreign policy, and a future vision for international relations.">حوار شامل حول التحديات الدبلوماسية والسياسة الخارجية ورؤية مستقبلية للعلاقات الدولية.</p>
+                        <div class="flex items-center justify-between text-xs text-gray-500">
+                            <span data-ar="قراءة 10 دقائق" data-en="10 min read">قراءة 10 دقائق</span>
+                            <span data-ar="منذ 3 أيام" data-en="3 days ago">منذ 3 أيام</span>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+
+        <!-- إعلان أفقي سفلي -->
+        <div class="mt-12">
+            <div class="bg-gradient-to-r from-amber-500 to-orange-600 rounded-lg overflow-hidden shadow-lg relative">
+                <span class="ad-badge" data-ar="إعلان" data-en="Ad">إعلان</span>
+                <div class="flex flex-col md:flex-row items-center justify-between p-8">
+                    <div class="text-white mb-4 md:mb-0 md:w-2/3">
+                        <span class="text-xs uppercase tracking-wide opacity-75" data-ar="محتوى مميز" data-en="Featured Content">محتوى مميز</span>
+                        <h3 class="text-3xl font-bold mt-2" data-ar="ندوة مباشرة: مستقبل السياسة في العالم العربي" data-en="Live Seminar: The Future of Politics in the Arab World">ندوة مباشرة: مستقبل السياسة في العالم العربي</h3>
+                        <p class="mt-3 text-sm opacity-90" data-ar="انضم إلينا في نقاش حي مع نخبة من الخبراء والمحللين السياسيين" data-en="Join us for a live discussion with elite political experts and analysts">انضم إلينا في نقاش حي مع نخبة من الخبراء والمحللين السياسيين</p>
+                        <div class="flex items-center mt-4 space-x-4 space-x-reverse">
+                            <button class="bg-white text-orange-600 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors" data-ar="سجل الآن" data-en="Register Now">سجل الآن</button>
+                            <span class="text-sm" data-ar="الأحد 3 ديسمبر - 8:00 مساءً" data-en="Sunday Dec 3 - 8:00 PM">الأحد 3 ديسمبر - 8:00 مساءً</span>
+                        </div>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="w-48 h-48 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-video text-white text-6xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- التذييل -->
+    <footer class="bg-gray-800 text-white pt-10 pb-6 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- معلومات الموقع -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4" data-ar="عن الموقع" data-en="About Us">عن الموقع</h3>
+                    <p class="text-gray-300 text-sm mb-4" data-ar="موقع إخباري متخصص يقدم آخر الأخبار المحلية والعالمية في مختلف المجالات بموضوعية ومهنية عالية." data-en="A specialized news website that provides the latest local and international news in various fields with high objectivity and professionalism.">موقع إخباري متخصص يقدم آخر الأخبار المحلية والعالمية في مختلف المجالات بموضوعية ومهنية عالية.</p>
+                    <div class="flex space-x-4 space-x-reverse">
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- روابط سريعة -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4" data-ar="روابط سريعة" data-en="Quick Links">روابط سريعة</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="الرئيسية" data-en="Home">الرئيسية</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="عن الموقع" data-en="About Us">عن الموقع</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="اتصل بنا" data-en="Contact Us">اتصل بنا</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="سياسة الخصوصية" data-en="Privacy Policy">سياسة الخصوصية</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="شروط الاستخدام" data-en="Terms of Service">شروط الاستخدام</a></li>
+                    </ul>
+                </div>
+
+                <!-- الأقسام -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4" data-ar="الأقسام" data-en="Sections">الأقسام</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-white font-medium" data-ar="السياسة" data-en="Politics">السياسة</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="الاقتصاد" data-en="Economy">الاقتصاد</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="الرياضة" data-en="Sports">الرياضة</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="التكنولوجيا" data-en="Technology">التكنولوجيا</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-ar="الصحة" data-en="Health">الصحة</a></li>
+                    </ul>
+                </div>
+
+                <!-- النشرة البريدية -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4" data-ar="النشرة البريدية" data-en="Newsletter">النشرة البريدية</h3>
+                    <p class="text-gray-300 text-sm mb-4" data-ar="اشترك في نشرتنا البريدية لتلقي آخر الأخبار والتحديثات مباشرة إلى بريدك الإلكتروني." data-en="Subscribe to our newsletter to receive the latest news and updates directly to your email.">اشترك في نشرتنا البريدية لتلقي آخر الأخبار والتحديثات مباشرة إلى بريدك الإلكتروني.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="بريدك الإلكتروني" class="px-4 py-2 w-full rounded-r-lg focus:outline-none text-gray-800 text-sm" data-ar-placeholder="بريدك الإلكتروني" data-en-placeholder="Your email">
+                        <button class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-l-lg text-sm font-medium transition-colors" data-ar="اشتراك" data-en="Subscribe">اشتراك</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- حقوق النشر -->
+            <div class="pt-6 border-t border-gray-700 text-center text-sm text-gray-400">
+                <p data-ar="جميع الحقوق محفوظة © 2023 موقع NewsHub - قسم السياسة" data-en="All rights reserved © 2023 NewsHub - Politics Section">جميع الحقوق محفوظة © 2023 موقع NewsHub - قسم السياسة</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // تبديل اللغة
+        document.getElementById('ar-btn').addEventListener('click', function() {
+            if (!this.classList.contains('bg-white')) {
+                switchLanguage('ar');
+            }
+        });
+
+        document.getElementById('en-btn').addEventListener('click', function() {
+            if (!this.classList.contains('bg-white')) {
+                switchLanguage('en');
+            }
+        });
+
+        function switchLanguage(lang) {
+            const body = document.body;
+            const arBtn = document.getElementById('ar-btn');
+            const enBtn = document.getElementById('en-btn');
+
+            if (lang === 'ar') {
+                body.setAttribute('dir', 'rtl');
+                arBtn.classList.add('bg-white', 'shadow');
+                enBtn.classList.remove('bg-white', 'shadow');
+                arBtn.classList.remove('text-gray-600');
+                enBtn.classList.add('text-gray-600');
+            } else {
+                body.setAttribute('dir', 'ltr');
+                enBtn.classList.add('bg-white', 'shadow');
+                arBtn.classList.remove('bg-white', 'shadow');
+                enBtn.classList.remove('text-gray-600');
+                arBtn.classList.add('text-gray-600');
+            }
+
+            // تحديث النصوص
+            document.querySelectorAll('[data-ar]').forEach(element => {
+                if (lang === 'ar') {
+                    element.textContent = element.getAttribute('data-ar');
+
+                    // تحديد النصوص البديلة
+                    if (element.hasAttribute('data-ar-placeholder')) {
+                        element.setAttribute('placeholder', element.getAttribute('data-ar-placeholder'));
+                    }
+                } else {
+                    element.textContent = element.getAttribute('data-en');
+
+                    // تحديد النصوص البديلة
+                    if (element.hasAttribute('data-en-placeholder')) {
+                        element.setAttribute('placeholder', element.getAttribute('data-en-placeholder'));
+                    }
+                }
+            });
+        }
+
+        // عرض التاريخ الحالي
+        function updateDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dir = document.body.getAttribute('dir');
+            const locale = dir === 'rtl' ? 'ar-SA' : 'en-US';
+            document.getElementById('current-date').textContent = now.toLocaleDateString(locale, options);
+        }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDate();
+
+            // تهيئة شريط الأخبار العاجلة
+            const ticker = document.querySelector('.breaking-news-ticker');
+            if (ticker) {
+                const tickerWidth = ticker.offsetWidth;
+                const containerWidth = ticker.parentElement.offsetWidth;
+
+                if (tickerWidth > containerWidth) {
+                    ticker.style.animationDuration = (tickerWidth / 50) + 's';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
